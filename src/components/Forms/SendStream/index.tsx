@@ -10,6 +10,8 @@ import { BaseButton } from "../../Buttons";
 import StartNowToggle from "./StartNowToggle";
 import { createStream } from "../../../api/set";
 import { BN } from "bn.js"
+import TokenInput from "./TokenInput";
+import ConnectWallet from "../../../pages/ConnectWallet";
 import { KeplerWalletState } from "../../../wallet/wallet";
 import bigDecimal from "js-big-decimal";
 
@@ -59,6 +61,7 @@ const SendStreamForm: FC<KeplerWalletState> = (props) => {
             <ArchwayNameIcon height={30} width={100} />
           </span>
           <ReceiverInput placeholder="satoshi.archway" />
+          <TokenInput/>
           <AmountInput placeholder="0.0" />
           <div className="flex flex-row gap-4 w-full justify-between">
             <StartDateInput placeholder={new Date().toLocaleDateString()} />
