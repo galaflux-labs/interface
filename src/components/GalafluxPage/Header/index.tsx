@@ -1,11 +1,8 @@
 import { FC } from 'react';
+import Flow from "../../Animation/Flow";
 
 const Header: FC = () => {
-  return (
-    <div className="">
-      Galaflux is the first decentralized social network that rewards you for your attention.
-    </div>
-  );
+  return <div className="h-10"><Flow /></div>
 };
 
 export default Header;

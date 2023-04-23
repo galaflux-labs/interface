@@ -1,9 +1,10 @@
 import { FC } from 'react';
+import SendStreamForm from "../../components/Forms/SendStream";
 
 const SendStream: FC = () => {
   return (
-    <div>
-      SendStream
+    <div className="flex items-center justify-center">
+      <SendStreamForm/>
     </div>
   );
 };
