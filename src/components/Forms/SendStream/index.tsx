@@ -11,6 +11,7 @@ import StartNowToggle from "./StartNowToggle";
 import { createStream } from "../../../api/set";
 import { useKeplerWallet } from "../../../wallet";
 import { BN } from "bn.js"
+import TokenInput from "./TokenInput";
 
 
 const SendStreamForm: FC = () => {
@@ -67,6 +68,7 @@ const SendStreamForm: FC = () => {
             <ArchwayNameIcon height={30} width={100} />
           </span>
           <ReceiverInput placeholder="satoshi.archway" />
+          <TokenInput/>
           <AmountInput placeholder="0.0" />
           <div className="flex flex-row gap-4 w-full justify-between">
             <StartDateInput placeholder={new Date().toLocaleDateString()} />
