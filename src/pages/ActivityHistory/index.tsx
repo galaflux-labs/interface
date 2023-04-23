@@ -2,8 +2,8 @@ import { FC } from 'react';
 
 const ActivityHistory: FC = () => {
   return (
-    <div>
-      ActivityHistory
+    <div className="text-4xl">
+      Activity history will be added soon
     </div>
   );
 };
