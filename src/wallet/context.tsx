@@ -7,7 +7,6 @@ const CosmWasmContext = createContext<KeplrWallet>({
     console.error("Kepler wallet not found")
   },
   loading: false,
-  error: null,
   state: null
 })
 

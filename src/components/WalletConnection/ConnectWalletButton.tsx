@@ -5,10 +5,10 @@ interface ConnectWalletProps {
   connectKeplr: () => void
 }
 
-const ConnectWallet: FC<ConnectWalletProps> = ({connectKeplr}) => {
+const ConnectWalletButton: FC<ConnectWalletProps> = ({connectKeplr}) => {
   return (
     <BaseButton text="Connect wallet" onClick={connectKeplr} />
   );
 };
 
-export default ConnectWallet;
+export default ConnectWalletButton;
