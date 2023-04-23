@@ -10,8 +10,14 @@ const StreamingHeader: FC<StreamingHeaderProps> = ({
   tokenName
 }) => {
   return (
-    <div className="flex flex-col gap-4 text-6xl">
-      {amount}
+    <div className="flex flex-col gap-3">
+      <div className="text-gray-600 text-xl">Total Amount Streamed</div>
+      <div className="text-6xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-black to-orange-600">
+        {amount} {tokenName}
+      </div>
+      <div className="text-2xl">
+        $ 0.0
+      </div>
     </div>
   );
 };

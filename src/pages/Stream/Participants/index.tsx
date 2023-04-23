@@ -1,5 +1,6 @@
-import { FC } from 'react';
+import React, { FC } from 'react';
 import Participant from "./Participant";
+import { HiOutlineArrowNarrowRight } from "react-icons/hi";
 
 interface ParticipantsProps {
   sender: string,
@@ -11,7 +12,7 @@ const Participants: FC<ParticipantsProps> = ({
   recipient,
 }) => {
   return (
-    <div className="flex flex-row justify-between w-full">
+    <div className="flex flex-row justify-between w-full items-end">
       <Participant address={sender} isSender={true} />
       <Participant address={recipient} isSender={false} />
     </div>

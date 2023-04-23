@@ -18,7 +18,7 @@ const Stream: FC<StreamProps> = (props) => {
 
   return (
     <div className="flex items-center justify-center h-full">
-      <div className="min-w-[700px]">
+      <div className="min-w-[600px] space-y-10">
         <StreamingHeader amount={props.amount}
                          tokenName={"$ARCH"}
         />

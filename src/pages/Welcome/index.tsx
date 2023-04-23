@@ -14,7 +14,7 @@ const Welcome: FC = () => {
     <>
       <Flow />
       <div className="min-h-screen flex flex-col justify-between items-center p-12">
-        <div className="text-8xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-black to-orange-400">
+        <div className="text-8xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-black to-orange-600">
           Galaflux
         </div>
         <div className="rounded-lg space-y-5">

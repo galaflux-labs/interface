@@ -6,7 +6,7 @@ const GalafluxLogo: FC = () => {
   return (
     <NavLink to="/" className="font-medium text-4xl flex items-center justify-center gap-2">
       <SiSquarespace size={40}/>
-      <span className="text-transparent bg-clip-text bg-gradient-to-r from-black to-orange-400">
+      <span className="text-transparent bg-clip-text bg-gradient-to-r from-black to-orange-600">
         Galaflux
       </span>
     </NavLink>
