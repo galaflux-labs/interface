@@ -1,20 +1,29 @@
 import React, { FC } from 'react';
-import Header from "./components/Header";
 import Description from "./components/Description";
 import Backers from "./components/Backers";
+import Flow from "../../components/Animation/Flow";
+import { BaseButton } from "../../components/Buttons";
+import { useNavigate } from "react-router-dom";
+import { routes } from "../../routes/paths";
 
 const Welcome: FC = () => {
 
+  const navigation = useNavigate()
+
   return (
-    // <div className="flex flex-col justify-between items-center h-screen font-kanit py-12 mx-48">
-    //   <div className="space-y-8 w-full">
-    //     <Header />
-    //     <Description />
-    //   </div>
-    //   <Backers />
-    // </div>
-  <div/>
-    // <div className="flex flex-col justify-between items-center h-screen font-kanit py-12 mx-48">
+    <>
+      <Flow />
+      <div className="min-h-screen flex flex-col justify-between items-center p-12">
+        <div className="text-8xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-black to-orange-400">
+          Galaflux
+        </div>
+        <div className="rounded-lg space-y-5">
+          <Description />
+          <BaseButton text="Launch app" onClick={() => navigation(routes.DASHBOARD)} />
+        </div>
+        <Backers />
+      </div>
+    </>
   );
 };
 

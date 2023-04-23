@@ -4,4 +4,5 @@ export const routes = {
   SEND_STREAM: '/send',
   HISTORY: '/history',
   ADDRESS_BOOK: '/address-book',
+  STREAM: '/stream/:id',
 }

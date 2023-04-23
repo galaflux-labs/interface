@@ -38,7 +38,7 @@ const SendStreamForm: FC = () => {
 
   return (
     <FormProvider {...methods}>
-      <div className="w-[600px] p-8 rounded-xl ring-1 ring-gray-300 bg-white">
+      <div className="w-[600px] p-8 rounded-2xl ring-1 ring-gray-300 bg-white">
         <div className="flex flex-col justify-center gap-4 w-full mb-8">
           <span className="text-xl flex gap-3 items-center justify-end">
             <ArchwayIcon size={30} />

@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 
 const Flow: FC = () => {
   return (
-    <svg viewBox="0 0 1920 700" fill="none">
+    <svg viewBox="0 0 1920 1970" fill="none" className="fixed indent-0 -z-10">
       <path d="M1 3.00354C179.628 198.347 377.216 285 632.684 285C888.152 285 973.973 285 1290.31 285C1606.65
 285 1797.76 143.751 1921 1.00002" stroke="url(#lines-path)" vectorEffect="non-scaling-stroke"></path>
 
