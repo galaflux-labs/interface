@@ -11,7 +11,6 @@ import StartNowToggle from "./StartNowToggle";
 import { createStream } from "../../../api/set";
 import { BN } from "bn.js"
 import TokenInput from "./TokenInput";
-import ConnectWallet from "../../../pages/ConnectWallet";
 import { KeplerWalletState } from "../../../wallet/wallet";
 import bigDecimal from "js-big-decimal";
 
