@@ -11,7 +11,7 @@ const StreamLink: FC<StreamLinkProps> = ({
   tokenName
 }) => {
   return (
-    <NavLink className="p-4" to={`/stream/${id}`}>
+    <NavLink to={`/stream/${id}`}>
       {tokenName}
     </NavLink>
   );
