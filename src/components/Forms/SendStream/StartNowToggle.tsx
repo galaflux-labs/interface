@@ -10,7 +10,6 @@ const StartNowToggle: React.FC = () => {
 
 
   useEffect(() => {
-    // set current date as default value in dd.mm.yyyy format
     if (enabled) {
       setValue("startDate", new Date().toLocaleDateString("en-CA"))
     } else {
@@ -20,7 +19,7 @@ const StartNowToggle: React.FC = () => {
 
   return (
     <div>
-      <Label label="Steam now" />
+      <Label label="Start date: now" />
       <Switch
         checked={enabled}
         onChange={setEnabled}

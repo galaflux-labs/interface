@@ -27,8 +27,6 @@ const SendStreamForm: FC = () => {
 
   const wallet = useKeplerWallet()
 
-  console.log(wallet)
-
   const {handleSubmit} = methods
 
   const [startDate, endDate] = methods.watch(["startDate", "endDate"])
@@ -40,8 +38,6 @@ const SendStreamForm: FC = () => {
     const startDateTimestamp = Math.floor(new Date(fields.startDate).getTime() / 1000)
     const endDateTimestamp = Math.floor(new Date(fields.endDate).getTime() / 1000)
     const amount = new BN(fields.amount).mul(new BN(10).pow(new BN(18))).toString()
-
-    console.log(amount, startDateTimestamp, endDateTimestamp, fields.receiver)
 
     createStream(
       wallet.walletAddress ?? "",
