@@ -10,7 +10,7 @@ interface ReceiverInputProps {
 
 const ReceiverInput: React.FC<ReceiverInputProps> = ({
   placeholder,
-  maxLength = 10
+  maxLength = 64
 }) => {
 
   const {register} = useFormContext<{ receiver: string }>()

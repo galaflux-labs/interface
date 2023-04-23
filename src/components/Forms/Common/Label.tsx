@@ -8,9 +8,9 @@ const Label: React.FC<RequiredFiledLabelProps> = ({
   label,
 }) => {
   return (
-    <span className="pl-2">
+    <div className="pl-2 pb-1" >
       {label}
-    </span>
+    </div>
   )
 };
 
