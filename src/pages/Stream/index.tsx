@@ -30,6 +30,8 @@ const Stream: FC<StreamProps> = (props) => {
                        tokenName={"$TEST"}
                        claimed={props.claimed_amount}
                        flowRate={props.rate_per_second}
+                       endDateTimestamp={props.end_time}
+                       startDateTimestamp={props.start_time}
         />
         <Participants sender={props.owner}
                       recipient={props.recipient}

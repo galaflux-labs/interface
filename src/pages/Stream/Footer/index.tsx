@@ -1,5 +1,7 @@
 import { FC, useEffect, useState } from 'react';
 import dayjs from "dayjs";
+import bigDecimal from "js-big-decimal";
+import { BN } from "bn.js";
 
 interface FooterProps {
   startTimeTimestamp: number,
@@ -32,7 +34,7 @@ const Footer: FC<FooterProps> = ({
   ratePerSecond,
 }) => {
 
-
+  const divisor = new bigDecimal(new BN(10).pow(new BN(18)).toString())
   const [remaining, setRemaining] = useState(endTimeTimestamp * 1000 - new Date().getDate())
 
   const start = dayjs(startTimeTimestamp * 1000)
@@ -50,8 +52,9 @@ const Footer: FC<FooterProps> = ({
     <div className="flex flex-col gap-2">
       <KeyValue keyName="Start time:" value={start.format(format)} />
       <KeyValue keyName="End time:" value={end.format(format)} />
-      <KeyValue keyName="Rate per second:" value={(ratePerSecond / 1e18).toFixed(6) + " " + "$TEST"} />
-      <KeyValue keyName={"Network"} value={"Archway"}/>
+      <KeyValue keyName="Rate per second:"
+                value={new bigDecimal(ratePerSecond).divide(divisor, 6).getPrettyValue(6, ",") + " " + "$TEST"} />
+      <KeyValue keyName={"Network"} value={"Archway"} />
     </div>
   );
 };
