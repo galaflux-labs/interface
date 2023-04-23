@@ -1,9 +1,10 @@
-import { FC } from 'react';
+import React, { FC } from 'react';
 import StreamingHeader from "./Header";
 import Participants from "./Participants";
 import Footer from "./Footer";
 import { useParams } from "react-router-dom";
 import ClaimableInfo from "./ClaimableInfo";
+import Flow from "../../components/Animation/Flow";
 
 interface StreamProps {
   owner: string,
@@ -19,6 +20,7 @@ const Stream: FC<StreamProps> = (props) => {
 
   return (
     <div className="flex items-center justify-center h-full">
+      <Flow/>
       <div className="min-w-[600px] space-y-12">
         <StreamingHeader amount={props.amount}
                          tokenName={"$ARCH"}
