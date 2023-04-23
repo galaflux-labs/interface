@@ -1,11 +1,11 @@
 import { FC } from 'react';
 
-interface Props {
+interface ArchwayIconProps {
   logoColor?: string;
   textColor?: string;
 }
 
-const Archway: FC<Props> = ({logoColor, textColor}) => {
+const ArchwayIcon: FC<ArchwayIconProps> = ({logoColor, textColor}) => {
   return (
     <span className="flex items-center space-x-2">
       <svg viewBox="0 0 120 120"
@@ -55,4 +55,4 @@ const Archway: FC<Props> = ({logoColor, textColor}) => {
   );
 };
 
-export default Archway;
+export default ArchwayIcon;

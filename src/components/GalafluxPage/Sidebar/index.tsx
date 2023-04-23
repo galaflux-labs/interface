@@ -2,7 +2,7 @@ import { FC } from 'react';
 import {ConnectedWallet, ConnectWalletButton} from "../../WalletConnection";
 import { useKeplerWallet } from "../../../wallet";
 import MenuOptions from "./Menu";
-import GalafluxLogo from "./GalafluxLogo";
+import GalafluxLogo from "./GalafluxHeader";
 
 const Sidebar: FC = () => {
 

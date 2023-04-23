@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-const Galaflux: FC = () => {
+const GalafluxIcon: FC = () => {
   return <svg height="256px" width="256px" version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg"
               xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 512.00 512.00" xmlSpace="preserve" fill="#a26c20"
               stroke="#a26c20" strokeWidth="0.00512" transform="rotate(0)matrix(-1, 0, 0, 1, 0, 0)">
@@ -17,4 +17,4 @@ const Galaflux: FC = () => {
   </svg>
 };
 
-export default Galaflux;
+export default GalafluxIcon;
