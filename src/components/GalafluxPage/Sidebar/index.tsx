@@ -1,38 +1,22 @@
-import React, { FC } from 'react';
-import BarOption from "./BarItem";
-import { HiOutlineArrowNarrowRight } from "react-icons/hi";
-import { MdSpaceDashboard } from "react-icons/md";
-import { RiContactsBook2Line, RiHistoryFill } from "react-icons/ri";
-import { Menu } from "@headlessui/react";
-import { routes } from "../../../routes/paths";
+import { FC } from 'react';
+import ConnectWallet from "../../ConnectWallet";
+import { useKeplerWallet } from "../../../wallet";
+import MenuOptions from "./Menu";
+import GalafluxLogo from "./GalafluxLogo";
 
 const Sidebar: FC = () => {
-  return (
-      <Menu>
-        <div className="space-y-2">
-          <BarOption
-            path={routes.DASHBOARD}
-            title="Dashboard"
-            icon={<MdSpaceDashboard size={24} />}
-          />
-          <BarOption
-            path={routes.SEND_STREAM}
-            title="Send stream"
-            icon={<HiOutlineArrowNarrowRight size={24} />}
-          />
-          <BarOption
-            path={routes.HISTORY}
-            title="History" icon={<RiHistoryFill
-            size={24} />}
-          />
-          <BarOption
-            path={routes.ADDRESS_BOOK}
-            title="Address book" icon={<RiContactsBook2Line
-            size={24} />}
-          />
-        </div>
-      </Menu>
-  );
-}
 
-export default Sidebar
+  const wallet = useKeplerWallet()
+
+  return (
+    <div className="w-60 block border-r-[1px] px-4 grow-0 shrink-0 basis-auto">
+      <div className="flex flex-col h-full space-y-8">
+        <GalafluxLogo/>
+        {<ConnectWallet connectKeplr={wallet.connect} />}
+        <MenuOptions />
+      </div>
+    </div>
+  );
+};
+
+export default Sidebar;

@@ -1,11 +1,11 @@
-import { FC, PropsWithChildren } from 'react';
-import LeftPanel from "./LeftPanel";
-import Header from "./Header";
+import React, { FC, PropsWithChildren } from 'react';
+import Header from "../Header";
+import Sidebar from "../Sidebar";
 
 const Layout: FC<PropsWithChildren> = ({children}) => {
     return (
       <div className="flex font-kanit min-h-screen">
-        <LeftPanel />
+        <Sidebar />
         <main className="flex-grow">
           <Header />
           {children}

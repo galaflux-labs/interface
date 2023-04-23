@@ -23,6 +23,7 @@ async function connectKeplr() {
   if (window['keplr']) {
     if (window.keplr['experimentalSuggestChain']) {
       await window.keplr.experimentalSuggestChain(ChainInfo)
+      console.log(window.keplr)
       await window.keplr.enable(ChainInfo.chainId)
     } else {
       console.warn(
@@ -47,7 +48,7 @@ export function useKeplerWalletState(): KeplrWallet {
 
     try {
       await connectKeplr();
-      const offlineSigner = (await global.window as any).getOfflineSigner(ChainInfo.chainId);
+      const offlineSigner = await (global.window as any).getOfflineSigner(ChainInfo.chainId);
 
       // get user address
       const [{address}] = await offlineSigner.getAccounts();

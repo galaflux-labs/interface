@@ -17,8 +17,8 @@ const BarOption: FC<Props> = ({
     <Menu.Item>
       <NavLink to={path}
                className={(state) => (
-                 "flex flex-row gap-4 px-4 py-3 rounded-lg hover:bg-gray-50 text-gray-600 " +
-                 (state.isActive ? "bg-orange-100 text-orange-400" : "hover:bg-gray-50 text-gray-600")
+                 "flex flex-row gap-4 px-4 py-3 rounded-lg " +
+                 (state.isActive ? "bg-orange-100 text-orange-400 hover:text-orange-500" : "hover:bg-gray-50 text-gray-600")
                )}
       >
         {icon}

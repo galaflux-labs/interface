@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { BaseButton } from "../Buttons";
 
 interface ConnectWalletProps {
-  connectKeplr: () => Promise<void>
+  connectKeplr: () => void
 }
 
 const ConnectWallet: FC<ConnectWalletProps> = ({connectKeplr}) => {

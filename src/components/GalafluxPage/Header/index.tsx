@@ -3,7 +3,7 @@ import { FC } from 'react';
 const Header: FC = () => {
   return (
     <div className="">
-      Galaflux
+      Galaflux is the first decentralized social network that rewards you for your attention.
     </div>
   );
 };
