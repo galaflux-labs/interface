@@ -2,7 +2,7 @@ import './index.css';
 import React from 'react';
 
 import AppRoutes from "./AppRoutes";
-import { KeplerWalletProvider } from "./wallet";
+import { KeplrWalletProvider } from "./wallet";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import { Buffer } from "buffer";
@@ -16,9 +16,9 @@ const root = createRoot(
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <KeplerWalletProvider>
+      <KeplrWalletProvider>
         <AppRoutes />
-      </KeplerWalletProvider>
+      </KeplrWalletProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

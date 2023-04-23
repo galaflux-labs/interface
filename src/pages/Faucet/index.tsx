@@ -1,17 +1,18 @@
-import {FC, useState} from 'react';
-import {BaseButton} from "../../components/Buttons";
-import {mint} from "../../api/set";
-import {useKeplerWallet} from "../../wallet";
+import { FC, useState } from 'react';
+import { BaseButton } from "../../components/Buttons";
+import { mint } from "../../api/set";
+import { useKeplrWallet } from "../../wallet";
 
 const Faucet: FC = () => {
 
     const [loading, setLoading] = useState(false)
 
-    const wallet = useKeplerWallet()
+    const wallet = useKeplrWallet()
 
     const faucet = () => {
         setLoading(true)
-        mint(wallet.state?.walletAddress, wallet.state?.signingClient, wallet.state?.gasPrice).then((r) => {
+        mint(wallet.state?.walletAddress, wallet.state?.signingClient, wallet.state?.gasPrice)
+        .then((r) => {
             console.log("Res:", r)
             setLoading(false)
         })

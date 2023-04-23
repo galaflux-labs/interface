@@ -1,4 +1,4 @@
-import { useKeplerWallet, KeplerWalletProvider } from "./context";
+import { useKeplrWallet, KeplrWalletProvider } from "./context";
 
-export { useKeplerWallet, KeplerWalletProvider };
+export { useKeplrWallet, KeplrWalletProvider };
 

@@ -8,4 +8,4 @@ const ActivityHistory: FC = () => {
   );
 };
 
-export default ActivityHistory;
+export default ActivityHistory
