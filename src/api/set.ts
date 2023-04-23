@@ -1,5 +1,5 @@
 import { calculateFee, GasPrice } from "@cosmjs/stargate";
-import { CONTRACT_ADDRESS, TOKEN_ADDRESS } from "./conf";
+import {CONTRACT_ADDRESS, FAUCET_ADDRESS, TOKEN_ADDRESS} from "./conf";
 import { Buffer } from "buffer";
 import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
 
@@ -47,6 +47,22 @@ export async function withdraw(userAddress: string, signingClient: any, gasPrice
         let txFee = calculateFee(500000, gasPrice);
 
         let tx = await signingClient.execute(userAddress, CONTRACT_ADDRESS, entrypoint, txFee);
+        return true
+    } catch (e) {
+        console.log('Error', e);
+        return false
+    }
+}
+
+export async function mint(userAddress: string | undefined, signingClient: any, gasPrice: any) {
+    try {
+        let entrypoint = {
+            withdraw: {
+            }
+        };
+        let txFee = calculateFee(500000, gasPrice);
+
+        let tx = await signingClient.execute(userAddress, FAUCET_ADDRESS, entrypoint, txFee);
         return true
     } catch (e) {
         console.log('Error', e);
