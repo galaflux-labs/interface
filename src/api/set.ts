@@ -14,6 +14,13 @@ interface CreateStreamParams {
     streamImmediately: boolean
 }
 
+interface WithdrawParams {
+    walletAddress: string
+    signingClient: SigningCosmWasmClient
+    gasPrice: GasPrice
+    streamId: number
+}
+
 
 export async function createStream(params: CreateStreamParams) {
     try {
@@ -40,20 +47,18 @@ export async function createStream(params: CreateStreamParams) {
     }
 }
 
-export async function withdraw(userAddress: string, signingClient: any, gasPrice: any, id: number) {
+export async function withdraw(params: WithdrawParams) {
     try {
         let entrypoint = {
             withdraw: {
-                id
+                id: params.streamId
             }
         };
-        let txFee = calculateFee(500000, gasPrice);
+        let txFee = calculateFee(500000, params.gasPrice);
 
-        let tx = await signingClient.execute(userAddress, CONTRACT_ADDRESS, entrypoint, txFee);
-        return true
+        return await params.signingClient.execute(params.walletAddress, CONTRACT_ADDRESS, entrypoint, txFee);
     } catch (e) {
-        console.log('Error', e);
-        return false
+        return Promise.reject()
     }
 }
 

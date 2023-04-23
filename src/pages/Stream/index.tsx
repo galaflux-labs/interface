@@ -6,8 +6,12 @@ import { useParams } from "react-router-dom";
 import ClaimableInfo from "./ClaimableInfo";
 import Flow from "../../components/Animation/Flow";
 import { getStream } from "../../api/get";
+import { useKeplrWallet } from "../../wallet";
+import { BaseButton } from "../../components/Buttons";
+import { withdraw } from "../../api/set";
 
 interface StreamProps {
+  streamId: number
   owner: string,
   recipient: string,
   amount: number,
@@ -19,9 +23,11 @@ interface StreamProps {
 
 const Stream: FC<StreamProps> = (props) => {
 
+  const {state} = useKeplrWallet()
+
   return (
     <div className="flex items-center justify-center h-full">
-      <Flow/>
+      <Flow />
       <div className="min-w-[600px] space-y-12">
         <StreamingHeader amount={props.amount}
                          tokenName={"$TEST"}
@@ -40,6 +46,19 @@ const Stream: FC<StreamProps> = (props) => {
                 endTimeTimestamp={props.end_time}
                 ratePerSecond={props.rate_per_second}
         />
+        {state && state.walletAddress == props.recipient &&
+          <div>
+            <BaseButton text="Claim tokens"
+                        onClick={() =>
+                          withdraw({
+                            walletAddress: state.walletAddress,
+                            streamId: props.streamId,
+                            signingClient: state.signingClient,
+                            gasPrice: state.gasPrice
+                          })}
+            />
+          </div>
+        }
       </div>
     </div>
   );
@@ -70,6 +89,7 @@ const StreamFetcher: FC = () => {
   }
 
   return <Stream owner={stream.owner}
+                 streamId={Number(id)}
                  recipient={stream.recipient}
                  amount={stream.amount}
                  claimed_amount={stream.claimed_amount}
