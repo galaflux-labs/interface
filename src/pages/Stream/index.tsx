@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import StreamingHeader from "./Header";
 import Participants from "./Participants";
-import TimeInfo from "./TimeInfo";
+import Footer from "./Footer";
 import { useParams } from "react-router-dom";
 
 interface StreamProps {
@@ -18,16 +18,17 @@ const Stream: FC<StreamProps> = (props) => {
 
   return (
     <div className="flex items-center justify-center h-full">
-      <div className="min-w-[600px] space-y-10">
+      <div className="min-w-[600px] space-y-12">
         <StreamingHeader amount={props.amount}
                          tokenName={"$ARCH"}
         />
         <Participants sender={props.owner}
                       recipient={props.recipient}
         />
-        <TimeInfo startTimeTimestamp={props.start_time}
-                  endTimeTimestamp={props.end_time}
-                  ratePerSecond={props.rate_per_second}
+        <Footer startTimeTimestamp={props.start_time}
+                endTimeTimestamp={props.end_time}
+                ratePerSecond={props.rate_per_second}
+                txHash="Undefined"
         />
       </div>
     </div>
