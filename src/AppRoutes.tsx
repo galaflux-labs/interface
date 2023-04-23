@@ -8,6 +8,7 @@ import AddressBook from "./pages/AddressBook";
 import ActivityHistory from "./pages/ActivityHistory";
 import Dashboard from "./pages/Dashboard";
 import Stream from "./pages/Stream";
+import Faucet from "./pages/Faucet";
 
 const AppRoutes: FC = () => {
 
@@ -19,6 +20,7 @@ const AppRoutes: FC = () => {
       <Route path={routes.ADDRESS_BOOK} element={<Layout>< AddressBook /></Layout>} />
       <Route path={routes.HISTORY} element={<Layout>< ActivityHistory /></Layout>} />
       <Route path={routes.STREAM} element={<Layout>< Stream /></Layout>} />
+      <Route path={routes.FAUCET} element={<Layout>< Faucet /></Layout>} />
     </Routes>
   );
 };

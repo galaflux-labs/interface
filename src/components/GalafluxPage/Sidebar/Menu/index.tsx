@@ -5,6 +5,7 @@ import { MdSpaceDashboard } from "react-icons/md";
 import { RiContactsBook2Line, RiHistoryFill } from "react-icons/ri";
 import { Menu } from "@headlessui/react";
 import { routes } from "../../../../routes/paths";
+import { FaFaucet } from "react-icons/fa";
 
 const MenuOptions: FC = () => {
   return (
@@ -22,13 +23,16 @@ const MenuOptions: FC = () => {
           />
           <BarOption
             path={routes.HISTORY}
-            title="History" icon={<RiHistoryFill
-            size={24} />}
+            title="History" icon={<RiHistoryFill size={24} />}
           />
           <BarOption
             path={routes.ADDRESS_BOOK}
-            title="Address book" icon={<RiContactsBook2Line
-            size={24} />}
+            title="Address book"
+            icon={<RiContactsBook2Line size={24} />}
+          />
+          <BarOption path={routes.FAUCET}
+                     title="Faucet (testnet)"
+                     icon={<FaFaucet size={24} />}
           />
         </div>
       </Menu>

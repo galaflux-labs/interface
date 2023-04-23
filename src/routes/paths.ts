@@ -5,4 +5,5 @@ export const routes = {
   HISTORY: '/history',
   ADDRESS_BOOK: '/address-book',
   STREAM: '/stream/:id',
+  FAUCET: '/faucet'
 }
