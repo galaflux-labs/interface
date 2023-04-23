@@ -5,15 +5,16 @@ import { Switch } from "@headlessui/react";
 
 const StartNowToggle: React.FC = () => {
 
-  const {setValue} = useFormContext<{ startDate: string }>()
+  const {setValue} = useFormContext<{ startDate: string, streamImmediately: boolean }>()
   const [enabled, setEnabled] = useState(false)
-
 
   useEffect(() => {
     if (enabled) {
       setValue("startDate", new Date().toLocaleDateString("en-CA"))
+      setValue("streamImmediately", true)
     } else {
-        setValue("startDate", "")
+      setValue("startDate", "")
+      setValue("streamImmediately", false)
     }
   }, [enabled])
 

@@ -1,5 +1,5 @@
 import { createContext, FC, PropsWithChildren, useContext } from 'react'
-import { KeplrWallet, useKeplerWalletState } from "./wallet";
+import { KeplrWallet, useKeplrConfiguration } from "./wallet";
 
 const KeplrWalletContext = createContext<KeplrWallet>({
   connect: () => Promise.reject("Keplr wallet not found"),
@@ -14,7 +14,7 @@ const KeplrWalletContext = createContext<KeplrWallet>({
 export const useKeplrWallet = () => useContext(KeplrWalletContext)
 
 export const KeplrWalletProvider: FC<PropsWithChildren<{}>> = ({children}) => {
-  const wallet = useKeplerWalletState()
+  const wallet = useKeplrConfiguration()
 
   return (
     <KeplrWalletContext.Provider value={wallet}>

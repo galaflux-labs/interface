@@ -3,4 +3,5 @@ export interface SendStreamSubmitProps {
   amount: string;
   startDate: string;
   endDate: string;
+  streamImmediately: boolean
 }

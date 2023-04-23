@@ -9,12 +9,11 @@ import EndDateInput from "./EndDataInput";
 import { BaseButton } from "../../Buttons";
 import StartNowToggle from "./StartNowToggle";
 import { createStream } from "../../../api/set";
-import { useKeplrWallet } from "../../../wallet";
 import { BN } from "bn.js"
-import ConnectWallet from "../../../pages/ConnectWallet";
+import { KeplerWalletState } from "../../../wallet/wallet";
+import bigDecimal from "js-big-decimal";
 
-
-const SendStreamForm: FC = () => {
+const SendStreamForm: FC<KeplerWalletState> = (props) => {
 
   const methods = useForm<SendStreamSubmitProps>({
     mode: "onChange",
@@ -22,11 +21,10 @@ const SendStreamForm: FC = () => {
       receiver: "",
       amount: "",
       startDate: "",
-      endDate: ""
+      endDate: "",
+      streamImmediately: false
     }
   })
-
-  const wallet = useKeplrWallet()
 
   const {handleSubmit} = methods
 
@@ -38,26 +36,19 @@ const SendStreamForm: FC = () => {
   const onSubmit = useCallback(handleSubmit(fields => {
     const startDateTimestamp = Math.floor(new Date(fields.startDate).getTime() / 1000)
     const endDateTimestamp = Math.floor(new Date(fields.endDate).getTime() / 1000)
-    const amount = new BN(fields.amount).mul(new BN(10).pow(new BN(18))).toString()
+    const amount = new bigDecimal(fields.amount).multiply(new bigDecimal(new BN(10).pow(new BN(18)).toString())).floor().getValue()
 
-    if (!wallet.state) {
-      return
-    }
-
-    createStream(
-      wallet.state.walletAddress,
-      wallet.state.signingClient,
-      wallet.state.gasPrice,
-      startDateTimestamp,
-      endDateTimestamp,
-      amount,
-      fields.receiver
-    ).then(console.log)
-  }), [wallet, handleSubmit])
-
-  if (!wallet.state) {
-    return <ConnectWallet/>
-  }
+    return createStream({
+      gasPrice: props.gasPrice,
+      ownerAddress: props.walletAddress,
+      signingClient: props.signingClient,
+      amount: amount,
+      receiver: fields.receiver,
+      startDate: startDateTimestamp,
+      endDate: endDateTimestamp,
+      streamImmediately: fields.streamImmediately
+    })
+  }), [props, handleSubmit])
 
   return (
     <FormProvider {...methods}>

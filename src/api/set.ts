@@ -1,39 +1,42 @@
 import { calculateFee, GasPrice } from "@cosmjs/stargate";
-import {CONTRACT_ADDRESS, FAUCET_ADDRESS, TOKEN_ADDRESS} from "./conf";
+import { CONTRACT_ADDRESS, FAUCET_ADDRESS, TOKEN_ADDRESS } from "./conf";
 import { Buffer } from "buffer";
 import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
 
+interface CreateStreamParams {
+    ownerAddress: string
+    signingClient: SigningCosmWasmClient
+    gasPrice: GasPrice
+    startDate: number
+    endDate: number
+    amount: string
+    receiver: string
+    streamImmediately: boolean
+}
 
-export async function createStream(
-  userAddress: string,
-  signingClient: SigningCosmWasmClient,
-  gasPrice: GasPrice,
-  startDate: number,
-  endDate: number,
-  amount: string,
-  receiver: string
-) {
+
+export async function createStream(params: CreateStreamParams) {
     try {
-        let code = Buffer.from(JSON.stringify({
-            "create_stream": {
-                "recipient": receiver,
-                "start_time": startDate,
-                "end_time": endDate
+        const code = Buffer.from(JSON.stringify({
+            'create_stream': {
+                'recipient': params.receiver,
+                'start_time': params.streamImmediately ? 0 : params.startDate,
+                'end_time': params.endDate
             }
         })).toString('base64')
-        let entrypoint = {
+
+        const entrypoint = {
             send: {
                 contract: CONTRACT_ADDRESS,
-                amount: amount,
+                amount: params.amount,
                 msg: code
             }
         };
         let txFee = calculateFee(500000, GasPrice.fromString("0.002uconst"));
 
-        return  await signingClient.execute(userAddress, TOKEN_ADDRESS, entrypoint, txFee);
+        return await params.signingClient.execute(params.ownerAddress, TOKEN_ADDRESS, entrypoint, txFee);
     } catch (e) {
-        console.log('Error', e);
-        return false
+        return Promise.reject()
     }
 }
 

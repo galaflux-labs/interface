@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { GasPrice } from "@cosmjs/stargate";
 import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
 
-interface KeplerWalletState {
+export interface KeplerWalletState {
   walletAddress: string
   signingClient: SigningCosmWasmClient
   gasPrice: GasPrice
@@ -36,7 +36,7 @@ async function connectKeplr() {
 }
 
 
-export function useKeplerWalletState(): KeplrWallet {
+export function useKeplrConfiguration(): KeplrWallet {
   const [signingClient, setSigningClient] = useState<SigningCosmWasmClient | null>(null);
   const [walletAddress, setWalletAddress] = useState<string>('');
   const [isConnecting, setIsConnecting] = useState<boolean>(false);
