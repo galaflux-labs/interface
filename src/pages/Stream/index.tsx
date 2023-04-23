@@ -9,19 +9,9 @@ import { getStream } from "../../api/get";
 import { useKeplrWallet } from "../../wallet";
 import { BaseButton } from "../../components/Buttons";
 import { withdraw } from "../../api/set";
+import { IStream } from "../../types/stream";
 
-interface StreamProps {
-  streamId: number
-  owner: string,
-  recipient: string,
-  amount: number,
-  claimed_amount: number,
-  start_time: number,
-  end_time: number,
-  rate_per_second: number,
-}
-
-const Stream: FC<StreamProps> = (props) => {
+const Stream: FC<IStream> = (props) => {
 
   const {state} = useKeplrWallet()
 
@@ -46,7 +36,7 @@ const Stream: FC<StreamProps> = (props) => {
                 endTimeTimestamp={props.end_time}
                 ratePerSecond={props.rate_per_second}
         />
-        {state && state.walletAddress == props.recipient &&
+        {state && state.walletAddress === props.recipient &&
           <div>
             <BaseButton text="Claim tokens"
                         onClick={() =>

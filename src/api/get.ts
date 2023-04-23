@@ -11,7 +11,8 @@ export async function getStream(id: number) {
                 id
             }
         };
-        return await cwClient.queryContractSmart(CONTRACT_ADDRESS, entrypoint);
+        const stream = await cwClient.queryContractSmart(CONTRACT_ADDRESS, entrypoint);
+        return {...stream, streamId: id}
     } catch (e) {
         console.log("getStream error:", e)
         return "error"

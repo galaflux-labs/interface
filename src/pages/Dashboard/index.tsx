@@ -1,37 +1,25 @@
-import { FC, useEffect, useState } from 'react';
-import StreamLink from "./StreamLink";
-import { ArchwayNameIcon } from "../../components/Icons";
+import React, { FC, useEffect, useState } from 'react';
+import { getIds, getStream } from "../../api/get";
+import { IStream } from "../../types/stream";
 import { useKeplrWallet } from "../../wallet";
-import { getIds } from "../../api/get";
+import ConnectWallet from "../ConnectWallet";
+import StreamRow from "./StreamRow";
 
-const Dashboard: FC = () => {
-
-  const tokens = [
-    {
-      id: "1",
-      tokenName: "Test stream"
-    },
-    {
-      id: "2",
-      tokenName: "Test stream 2"
-    },
-    {
-      id: "3",
-      tokenName: "Test stream 3"
-    }
-  ]
-
+const StreamsList: FC<{ streams: IStream[], walletAddress: string }> = ({streams, walletAddress}) => {
   return (
     <div className="flex flex-col gap-4 px-20">
       <div className="text-4xl text-gray-600">Streams</div>
-      <div className="ring-[1px] ring-gray-300 px-6 py-5 rounded-xl space-y-5">
-        <ArchwayNameIcon width={100} height={40} />
-        <hr/>
-        <div className="flex flex-col gap-4">
-          {tokens.map((token) => (
-            <div>
-              <StreamLink {...token} />
-            </div>
+      <div className="ring-[1px] ring-gray-300 rounded-xl space-y-5 overflow-hidden">
+        <div className="flex flex-col px-6 py-4">
+          <div className="flex flex-row justify-between text-sm text-gray-600">
+            <div>Token</div>
+            <div>Sender</div>
+            <div>Receiver</div>
+            <div>Total</div>
+            <div>Flow per second</div>
+          </div>
+          {streams.map((stream) => (
+            <StreamRow key={stream.streamId} walletAddress={walletAddress} {...stream} />
           ))}
         </div>
       </div>
@@ -40,15 +28,34 @@ const Dashboard: FC = () => {
 };
 
 
-const StreamsFetcher: FC = () => {
-  const wallet = useKeplrWallet()
+const StreamsFetcher: FC<{ walletAddress: string }> = ({walletAddress}) => {
   const [ids, setIds] = useState<number[]>([])
+  const [streams, setStreams] = useState<IStream[]>([])
 
   useEffect(() => {
-    getIds("archway18arcrs9ntn3jspld3ah4kgu6shpn807u3nf72h").then(setIds)
+    getIds(walletAddress).then(setIds)
   }, [])
 
-  return <Dashboard />
+  useEffect(() => {
+    Promise
+    .all(ids.map(id => getStream(id)))
+    .then(setStreams)
+  }, [ids])
+
+  return <StreamsList streams={streams} walletAddress={walletAddress} />
 };
 
-export default StreamsFetcher;
+const Dashboard: FC = () => {
+  const {state} = useKeplrWallet()
+
+  return (
+    <>
+      {state
+        ? <StreamsFetcher walletAddress={state.walletAddress} />
+        : <ConnectWallet />
+      }
+    </>
+  )
+}
+
+export default Dashboard;
