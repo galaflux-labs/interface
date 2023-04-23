@@ -11,7 +11,7 @@ const Sidebar: FC = () => {
 
   return (
     <div className="w-60 block border-r-[1px] px-4 grow-0 shrink-0 basis-auto">
-      <div className="flex flex-col h-full space-y-8">
+      <div className="flex flex-col h-full space-y-14 pt-10">
         <GalafluxLogo />
         {
           wallet.state

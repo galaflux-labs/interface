@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import StreamLink from "./StreamLink";
+import Flow from "../../components/Animation/Flow";
 
 const Dashboard: FC = () => {
 
@@ -20,6 +21,7 @@ const Dashboard: FC = () => {
 
   return (
     <div className="flex flex-col gap-4">
+      <Flow/>
       {tokens.map((token) => (<StreamLink {...token} />))}
     </div>
   );
