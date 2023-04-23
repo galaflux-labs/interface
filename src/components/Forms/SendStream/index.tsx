@@ -9,8 +9,9 @@ import EndDateInput from "./EndDataInput";
 import { BaseButton } from "../../Buttons";
 import StartNowToggle from "./StartNowToggle";
 import { createStream } from "../../../api/set";
-import { useKeplerWallet } from "../../../wallet";
+import { useKeplrWallet } from "../../../wallet";
 import { BN } from "bn.js"
+import ConnectWallet from "../../../pages/ConnectWallet";
 
 
 const SendStreamForm: FC = () => {
@@ -25,7 +26,7 @@ const SendStreamForm: FC = () => {
     }
   })
 
-  const wallet = useKeplerWallet()
+  const wallet = useKeplrWallet()
 
   const {handleSubmit} = methods
 
@@ -55,7 +56,7 @@ const SendStreamForm: FC = () => {
   }), [wallet, handleSubmit])
 
   if (!wallet.state) {
-    return <div>Wallet not connected</div>
+    return <ConnectWallet/>
   }
 
   return (

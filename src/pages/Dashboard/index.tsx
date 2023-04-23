@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react';
 import StreamLink from "./StreamLink";
 import { ArchwayNameIcon } from "../../components/Icons";
-import { useKeplerWallet } from "../../wallet";
+import { useKeplrWallet } from "../../wallet";
 import { getIds } from "../../api/get";
 
 const Dashboard: FC = () => {
@@ -41,7 +41,7 @@ const Dashboard: FC = () => {
 
 
 const StreamsFetcher: FC = () => {
-  const wallet = useKeplerWallet()
+  const wallet = useKeplrWallet()
   const [ids, setIds] = useState<number[]>([])
 
   useEffect(() => {

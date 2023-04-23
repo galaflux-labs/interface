@@ -1,5 +1,6 @@
 import { FC } from 'react';
 
+
 const AddressBook: FC = () => {
   return (
     <div className="text-4xl text-center">
@@ -8,4 +9,4 @@ const AddressBook: FC = () => {
   );
 };
 
-export default AddressBook;
+export default AddressBook
