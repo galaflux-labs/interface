@@ -24,10 +24,10 @@ const Stream: FC<StreamProps> = (props) => {
       <Flow/>
       <div className="min-w-[600px] space-y-12">
         <StreamingHeader amount={props.amount}
-                         tokenName={"$ARCH"}
+                         tokenName={"$TEST"}
         />
         <ClaimableInfo amount={props.amount}
-                       tokenName={"$ARCH"}
+                       tokenName={"$TEST"}
                        claimed={props.claimed_amount}
                        flowRate={props.rate_per_second}
         />
