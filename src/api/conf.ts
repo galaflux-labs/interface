@@ -1,2 +1,3 @@
 export const TOKEN_ADDRESS = "archway1su8w2mswe2sgcd7mhu3gq4gnvznw2la88euah8t0snw92r684s5sgrsnf5"
 export const CONTRACT_ADDRESS = "archway1c3esfmxrwwly792y262dcggfc20fjm5g22ql7agpwnaf9ga4td4qz4c6rq"
+export const FAUCET_ADDRESS = "archway15qpm4ve6klldv2s4hk5vstje8ssvuamv7e2x6q7sx4avqc2rw9ds5yqwtf"
