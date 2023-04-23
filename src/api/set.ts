@@ -1,9 +1,18 @@
-import {calculateFee} from "@cosmjs/stargate";
-import {CONTRACT_ADDRESS, TOKEN_ADDRESS} from "./conf";
+import { calculateFee, GasPrice } from "@cosmjs/stargate";
+import { CONTRACT_ADDRESS, TOKEN_ADDRESS } from "./conf";
+import { Buffer } from "buffer";
+import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
 
 
-export async function createStream(userAddress: String, signingClient: any, gasPrice: any,
-                                   startDate: Number, endDate: Number, amount: String, receiver: String) {
+export async function createStream(
+  userAddress: string,
+  signingClient: SigningCosmWasmClient,
+  gasPrice: GasPrice,
+  startDate: number,
+  endDate: number,
+  amount: string,
+  receiver: string
+) {
     try {
         let code = Buffer.from(JSON.stringify({
             "create_stream": {
@@ -12,7 +21,6 @@ export async function createStream(userAddress: String, signingClient: any, gasP
                 "end_time": endDate
             }
         })).toString('base64')
-        console.log(code)
         let entrypoint = {
             send: {
                 contract: CONTRACT_ADDRESS,
@@ -20,21 +28,20 @@ export async function createStream(userAddress: String, signingClient: any, gasP
                 msg: code
             }
         };
-        let txFee = calculateFee(500000, gasPrice);
+        let txFee = calculateFee(500000, GasPrice.fromString("0.002uconst"));
 
-        let tx = await signingClient.execute(userAddress, TOKEN_ADDRESS, entrypoint, txFee);
-        return true
+        return  await signingClient.execute(userAddress, TOKEN_ADDRESS, entrypoint, txFee);
     } catch (e) {
         console.log('Error', e);
         return false
     }
 }
 
-export async function withdraw(userAddress: String, signingClient: any, gasPrice: any, id: Number) {
+export async function withdraw(userAddress: string, signingClient: any, gasPrice: any, id: number) {
     try {
         let entrypoint = {
             withdraw: {
-                id: id
+                id
             }
         };
         let txFee = calculateFee(500000, gasPrice);

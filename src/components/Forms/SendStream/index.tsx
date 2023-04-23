@@ -8,6 +8,9 @@ import StartDateInput from "./StartDateInput";
 import EndDateInput from "./EndDataInput";
 import { BaseButton } from "../../Buttons";
 import StartNowToggle from "./StartNowToggle";
+import { createStream } from "../../../api/set";
+import { useKeplerWallet } from "../../../wallet";
+import { BN } from "bn.js"
 
 
 const SendStreamForm: FC = () => {
@@ -22,6 +25,10 @@ const SendStreamForm: FC = () => {
     }
   })
 
+  const wallet = useKeplerWallet()
+
+  console.log(wallet)
+
   const {handleSubmit} = methods
 
   const [startDate, endDate] = methods.watch(["startDate", "endDate"])
@@ -29,12 +36,27 @@ const SendStreamForm: FC = () => {
   const startDateTimestamp = new Date(startDate).getTime()
   const endDateTimestamp = new Date(endDate).getTime()
 
-  console.log(startDate)
-
   const onSubmit = useCallback(handleSubmit(fields => {
-    const startDateTimestamp = new Date(startDate).getTime()
-    const endDateTimestamp = new Date(endDate).getTime()
-  }), [handleSubmit])
+    const startDateTimestamp = Math.floor(new Date(fields.startDate).getTime() / 1000)
+    const endDateTimestamp = Math.floor(new Date(fields.endDate).getTime() / 1000)
+    const amount = new BN(fields.amount).mul(new BN(10).pow(new BN(18))).toString()
+
+    console.log(amount, startDateTimestamp, endDateTimestamp, fields.receiver)
+
+    createStream(
+      wallet.walletAddress ?? "",
+      wallet.signingClient,
+      wallet.gasPrice,
+      startDateTimestamp,
+      endDateTimestamp,
+      amount,
+      fields.receiver
+    ).then(console.log)
+  }), [wallet, handleSubmit])
+
+  if (!wallet.walletAddress) {
+    return <div>Wallet not connected</div>
+  }
 
   return (
     <FormProvider {...methods}>

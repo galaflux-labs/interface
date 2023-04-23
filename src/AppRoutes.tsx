@@ -7,7 +7,7 @@ import SendStream from "./pages/SendStream";
 import AddressBook from "./pages/AddressBook";
 import ActivityHistory from "./pages/ActivityHistory";
 import Dashboard from "./pages/Dashboard";
-import StreamFetcher from "./pages/Stream";
+import Stream from "./pages/Stream";
 
 const AppRoutes: FC = () => {
 
@@ -18,7 +18,7 @@ const AppRoutes: FC = () => {
       <Route path={routes.SEND_STREAM} element={<Layout>< SendStream /></Layout>} />
       <Route path={routes.ADDRESS_BOOK} element={<Layout>< AddressBook /></Layout>} />
       <Route path={routes.HISTORY} element={<Layout>< ActivityHistory /></Layout>} />
-      <Route path={routes.STREAM} element={<Layout>< StreamFetcher /></Layout>} />
+      <Route path={routes.STREAM} element={<Layout>< Stream /></Layout>} />
     </Routes>
   );
 };

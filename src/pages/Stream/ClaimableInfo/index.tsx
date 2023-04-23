@@ -7,50 +7,32 @@ interface ClaimableInfoProps {
   flowRate: number
 }
 
-interface KeyValueProps {
-  keyName: string,
-  value: string
-}
-
-const KeyValue: FC<KeyValueProps> = ({keyName, value}) => {
-  return (
-    <div className="flex flex-row justify-between">
-      <div className="text-gray-600">
-        {keyName}
-      </div>
-      <div>
-        {value}
-      </div>
-    </div>
-  );
-};
-
 const ClaimableInfo: FC<ClaimableInfoProps> = (props) => {
 
-  const [claimable, setClaimable] = useState(props.amount - props.claimed)
+  const [claimable, setClaimable] = useState(0)
 
   useEffect(() => {
     setTimeout(() => {
-      setClaimable(claimable + props.flowRate)
+      setClaimable(value => value + props.flowRate)
     }, 1000)
   })
 
   return (
     <div className="flex flex-row justify-between">
-      <div className="space-y-3">
-        <span className="text-gray-600">
-          Claimable {props.tokenName}
-        </span>
-        <div className="text-2xl">
-          {claimable}
-        </div>
-      </div>
+      {/*<div className="space-y-3">*/}
+      {/*  <span className="text-gray-600">*/}
+      {/*    Claimable {props.tokenName}*/}
+      {/*  </span>*/}
+      {/*  <div className="text-2xl">*/}
+      {/*    {(claimable / 1e18).toFixed(6)}*/}
+      {/*  </div>*/}
+      {/*</div>*/}
       <div className="space-y-3">
         <span className="text-gray-600">
           Claimed {props.tokenName}
         </span>
         <div className="text-2xl">
-          {props.claimed}
+          {(props.claimed / 1e18).toFixed(6)}
         </div>
       </div>
     </div>

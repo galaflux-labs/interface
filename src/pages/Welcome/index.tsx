@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import Description from "./components/Description";
-import Backers from "./components/Backers";
+import Backers from "./components/Supporters";
 import Flow from "../../components/Animation/Flow";
 import { BaseButton } from "../../components/Buttons";
 import { useNavigate } from "react-router-dom";

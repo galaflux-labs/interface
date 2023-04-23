@@ -1,10 +1,11 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import StreamingHeader from "./Header";
 import Participants from "./Participants";
 import Footer from "./Footer";
 import { useParams } from "react-router-dom";
 import ClaimableInfo from "./ClaimableInfo";
 import Flow from "../../components/Animation/Flow";
+import { getStream } from "../../api/get";
 
 interface StreamProps {
   owner: string,
@@ -49,21 +50,21 @@ type StreamRouterParams = {
 const StreamFetcher: FC = () => {
   const {id} = useParams<StreamRouterParams>()
 
-  console.log(id)
+  const [stream, setStream] = useState<any>(null)
+  const [loading, setLoading] = useState<boolean>(true)
+
+  useEffect(() => {
+    if (id) {
+      getStream(Number(id)).then(setStream).finally(() => setLoading(false))
+    }
+  }, [id])
 
   if (!id) {
     return <div>Invalid stream id</div>
   }
 
-  // fetch stream here
-  const stream = {
-    owner: "danielto.arch",
-    recipient: "turk.arch",
-    amount: 10,
-    claimed_amount: 100,
-    start_time: 1682257782,
-    end_time: 1698068982,
-    rate_per_second: 0.5,
+  if (loading) {
+    return <div>loading..</div>
   }
 
   return <Stream owner={stream.owner}

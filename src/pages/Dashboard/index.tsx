@@ -1,6 +1,8 @@
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import StreamLink from "./StreamLink";
 import { ArchwayNameIcon } from "../../components/Icons";
+import { useKeplerWallet } from "../../wallet";
+import { getIds } from "../../api/get";
 
 const Dashboard: FC = () => {
 
@@ -38,4 +40,15 @@ const Dashboard: FC = () => {
 };
 
 
-export default Dashboard;
+const StreamsFetcher: FC = () => {
+  const wallet = useKeplerWallet()
+  const [ids, setIds] = useState<number[]>([])
+
+  useEffect(() => {
+    getIds("archway18arcrs9ntn3jspld3ah4kgu6shpn807u3nf72h").then(setIds)
+  }, [])
+
+  return <Dashboard />
+};
+
+export default StreamsFetcher;

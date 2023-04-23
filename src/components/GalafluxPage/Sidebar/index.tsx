@@ -14,8 +14,8 @@ const Sidebar: FC = () => {
       <div className="flex flex-col h-full space-y-14 pt-10">
         <GalafluxLogo />
         {
-          wallet.state
-            ? <ConnectedWallet address={wallet.state.address}/>
+          wallet.walletAddress
+            ? <ConnectedWallet address={wallet.walletAddress}/>
             : <ConnectWalletButton connectKeplr={wallet.connect} />
         }
         <MenuOptions />
