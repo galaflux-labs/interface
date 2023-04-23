@@ -50,7 +50,7 @@ const Footer: FC<FooterProps> = ({
     <div className="flex flex-col gap-2">
       <KeyValue keyName="Start time:" value={start.format(format)} />
       <KeyValue keyName="End time:" value={end.format(format)} />
-      <KeyValue keyName="Rate per second:" value={(ratePerSecond / 1e18).toFixed(6) + " " + "$ARCH"} />
+      <KeyValue keyName="Rate per second:" value={(ratePerSecond / 1e18).toFixed(6) + " " + "$TEST"} />
       <KeyValue keyName={"Network"} value={"Archway"}/>
     </div>
   );
