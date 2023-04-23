@@ -3,6 +3,7 @@ import StreamingHeader from "./Header";
 import Participants from "./Participants";
 import Footer from "./Footer";
 import { useParams } from "react-router-dom";
+import ClaimableInfo from "./ClaimableInfo";
 
 interface StreamProps {
   owner: string,
@@ -22,13 +23,17 @@ const Stream: FC<StreamProps> = (props) => {
         <StreamingHeader amount={props.amount}
                          tokenName={"$ARCH"}
         />
+        <ClaimableInfo amount={props.amount}
+                       tokenName={"$ARCH"}
+                       claimed={props.claimed_amount}
+                       flowRate={props.rate_per_second}
+        />
         <Participants sender={props.owner}
                       recipient={props.recipient}
         />
         <Footer startTimeTimestamp={props.start_time}
                 endTimeTimestamp={props.end_time}
                 ratePerSecond={props.rate_per_second}
-                txHash="Undefined"
         />
       </div>
     </div>

@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
 import Participant from "./Participant";
-import { HiOutlineArrowNarrowRight } from "react-icons/hi";
 
 interface ParticipantsProps {
   sender: string,

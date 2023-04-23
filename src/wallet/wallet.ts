@@ -57,7 +57,7 @@ export function useKeplerWalletState(): KeplrWallet {
       // make client
       setSigningClient(null)
         // await SigningCosmWasmClient.connectWithSigner(
-        //   ChainInfo.rpc,
+        //   ClaimableInfo.rpc,
         //   offlineSigner,
         // ),
       // );

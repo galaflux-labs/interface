@@ -1,10 +1,10 @@
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
+import dayjs from "dayjs";
 
 interface FooterProps {
   startTimeTimestamp: number,
   endTimeTimestamp: number,
-  ratePerSecond: number,
-  txHash: string
+  ratePerSecond: number
 }
 
 interface KeyValueProps {
@@ -30,22 +30,28 @@ const Footer: FC<FooterProps> = ({
   startTimeTimestamp,
   endTimeTimestamp,
   ratePerSecond,
-  txHash
 }) => {
 
-  // convert timestamps to human readable dd month yyyy hh:mm
-  const startTime = new Date(startTimeTimestamp * 1_000).toLocaleString()
-  const endTime = new Date(endTimeTimestamp * 1000).toLocaleString()
 
-  // calculate remaining time in human readable format
-  const remainingTime = new Date(endTimeTimestamp - startTimeTimestamp).toLocaleString()
+  const [remaining, setRemaining] = useState(endTimeTimestamp * 1000 - new Date().getDate())
+
+  const start = dayjs(startTimeTimestamp * 1000)
+  const end = dayjs(endTimeTimestamp * 1000)
+  const format = "D MMM. YYYY HH:mm"
+
+  // update remaining each second
+  useEffect(() => {
+    setTimeout(() => {
+      setRemaining(value => value - 1)
+    }, 1000)
+  }, [remaining])
 
   return (
     <div className="flex flex-col gap-2">
-      <KeyValue keyName="Start time:" value={startTime} />
-      <KeyValue keyName="End time:" value={endTime} />
-      <KeyValue keyName="Rate per second:" value={ratePerSecond.toString()} />
-      <KeyValue keyName="Tx hash:" value={txHash}/>
+      <KeyValue keyName="Start time:" value={start.format(format)} />
+      <KeyValue keyName="End time:" value={end.format(format)} />
+      <KeyValue keyName="Rate per second:" value={ratePerSecond.toString() + " " + "$ARCH"} />
+      <KeyValue keyName={"Network"} value={"Archway"}/>
     </div>
   );
 };

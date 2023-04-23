@@ -1,4 +1,4 @@
-// export const ChainInfo = {
+// export const ClaimableInfo = {
 //   // Chain-id of the Cosmos SDK chain.
 //   chainId: "constantine-1",
 //   // The name of the chain to be displayed to the user.

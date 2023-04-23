@@ -7,7 +7,7 @@ interface StreamingHeaderProps {
 
 const StreamingHeader: FC<StreamingHeaderProps> = ({
   amount,
-  tokenName
+  tokenName,
 }) => {
   return (
     <div className="flex flex-col gap-3">
