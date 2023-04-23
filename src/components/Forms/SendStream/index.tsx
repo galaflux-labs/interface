@@ -39,10 +39,14 @@ const SendStreamForm: FC = () => {
     const endDateTimestamp = Math.floor(new Date(fields.endDate).getTime() / 1000)
     const amount = new BN(fields.amount).mul(new BN(10).pow(new BN(18))).toString()
 
+    if (!wallet.state) {
+      return
+    }
+
     createStream(
-      wallet.walletAddress ?? "",
-      wallet.signingClient,
-      wallet.gasPrice,
+      wallet.state.walletAddress,
+      wallet.state.signingClient,
+      wallet.state.gasPrice,
       startDateTimestamp,
       endDateTimestamp,
       amount,
@@ -50,7 +54,7 @@ const SendStreamForm: FC = () => {
     ).then(console.log)
   }), [wallet, handleSubmit])
 
-  if (!wallet.walletAddress) {
+  if (!wallet.state) {
     return <div>Wallet not connected</div>
   }
 

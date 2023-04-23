@@ -4,14 +4,17 @@ import { useState } from 'react';
 import { GasPrice } from "@cosmjs/stargate";
 import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
 
-export interface KeplrWallet {
-  connect: () => Promise<void>,
-  disconnect: () => void,
-  loading: boolean,
+interface KeplerWalletState {
+  walletAddress: string
+  signingClient: SigningCosmWasmClient
+  gasPrice: GasPrice
+}
 
-  walletAddress: any
-  gasPrice: any
-  signingClient: any
+export interface KeplrWallet {
+  connect: () => Promise<void>
+  disconnect: () => void
+  isConnecting: boolean
+  state: KeplerWalletState | null
 }
 
 async function connectKeplr() {
@@ -34,37 +37,31 @@ async function connectKeplr() {
 
 
 export function useKeplerWalletState(): KeplrWallet {
-  const [signingClient, setSigningClient] =
-    useState<any>(null);
-  const [walletAddress, setWalletAddress] = useState<any>('');
-  const [loading, setLoading] = useState<any>(false);
-  const [gasPrice, setGasPrice] = useState<any>(null);
+  const [signingClient, setSigningClient] = useState<SigningCosmWasmClient | null>(null);
+  const [walletAddress, setWalletAddress] = useState<string>('');
+  const [isConnecting, setIsConnecting] = useState<boolean>(false);
+  const [gasPrice, setGasPrice] = useState<GasPrice | null>(null);
 
   const connect = async () => {
-    setLoading(true);
+    setIsConnecting(true);
 
     try {
       await connectKeplr();
       const offlineSigner = await (window as any).getOfflineSigner(ChainInfo.chainId);
 
-      // get user address
       const [{address}] = await offlineSigner.getAccounts();
+      const client = await SigningCosmWasmClient.connectWithSigner(
+        ChainInfo.rpc,
+        offlineSigner,
+      )
+
       setWalletAddress(address);
-      // Gas price
       setGasPrice(GasPrice.fromString('0.002uconst'));
-
-      // make client
-      setSigningClient(
-        await SigningCosmWasmClient.connectWithSigner(
-          ChainInfo.rpc,
-          offlineSigner,
-        ),
-      );
-
-      setLoading(false);
+      setSigningClient(client);
+      setIsConnecting(false);
     } catch (error) {
-        console.error(error);
-        setLoading(false);
+      console.error(error);
+      setIsConnecting(false);
     }
   };
 
@@ -73,17 +70,23 @@ export function useKeplerWalletState(): KeplrWallet {
       signingClient.disconnect();
     }
     setWalletAddress('');
+    setIsConnecting(false);
     setSigningClient(null);
-    setLoading(false);
     setGasPrice(null);
   };
 
+  const state: KeplerWalletState | null = (walletAddress != null && signingClient != null && gasPrice != null)
+    ? {
+      walletAddress,
+      signingClient,
+      gasPrice,
+    }
+    : null
+
   return {
-    walletAddress,
-    signingClient,
-    loading,
     connect,
     disconnect,
-    gasPrice,
+    isConnecting,
+    state
   };
 }

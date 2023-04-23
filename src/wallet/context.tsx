@@ -1,13 +1,13 @@
 import { createContext, FC, PropsWithChildren, useContext } from 'react'
-import { useKeplerWalletState, KeplrWallet } from "./wallet";
+import { KeplrWallet, useKeplerWalletState } from "./wallet";
 
 const CosmWasmContext = createContext<KeplrWallet>({
-  gasPrice: undefined, signingClient: undefined, walletAddress: undefined,
   connect: () => Promise.reject("Kepler wallet not found"),
   disconnect: () => {
     console.error("Kepler wallet not found")
   },
-  loading: false
+  isConnecting: false,
+  state: null
 
 })
 
