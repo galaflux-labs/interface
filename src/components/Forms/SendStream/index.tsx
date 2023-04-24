@@ -42,13 +42,14 @@ const SendStreamForm: FC<KeplerWalletState> = (props) => {
     setShowAlert(true)
     setTimeout(function () {
       setShowAlert(false)
-    }, 3000)
+    }, 4000)
   }, [setIsAlertError, setAlertMsg, setShowAlert])
 
   const startDateTimestamp = new Date(startDate).getTime()
   const endDateTimestamp = new Date(endDate).getTime()
 
   const onSubmit = useCallback(handleSubmit(fields => {
+    console.log("onSubmit")
     const startDateTimestamp = Math.floor(new Date(fields.startDate).getTime() / 1000)
     const endDateTimestamp = Math.floor(new Date(fields.endDate).getTime() / 1000)
     const amount = new bigDecimal(fields.amount).multiply(new bigDecimal(new BN(10).pow(new BN(18)).toString())).floor().getValue()
@@ -75,7 +76,13 @@ const SendStreamForm: FC<KeplerWalletState> = (props) => {
         streamImmediately: false
       })
     })
-    .catch(() => alert("Error while creating a stream", true))
+    .catch((e) => {
+      if (e.toString().startsWith("Error: Account does not exist on chain.")){
+        alert("Not enough funds: Use Archway Discord faucet ", true)
+      } else {
+        alert("Error while creating a stream", true)
+      }
+    })
 
   }), [props, alert, methods])
 
@@ -105,7 +112,6 @@ const SendStreamForm: FC<KeplerWalletState> = (props) => {
                     disabled={
                       !methods.formState.isValid
                       || methods.formState.isSubmitting
-                      || methods.formState.isSubmitted
                       || startDateTimestamp > endDateTimestamp
                     }
                     onClick={onSubmit}

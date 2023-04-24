@@ -43,7 +43,7 @@ export async function createStream(params: CreateStreamParams) {
 
         return await params.signingClient.execute(params.ownerAddress, TOKEN_ADDRESS, entrypoint, txFee);
     } catch (e) {
-        return Promise.reject()
+        return Promise.reject(e)
     }
 }
 
@@ -74,10 +74,8 @@ export async function mint(userAddress: string | undefined, signingClient: any, 
         };
         let txFee = calculateFee(500000, gasPrice);
 
-        let tx = await signingClient.execute(userAddress, FAUCET_ADDRESS, entrypoint, txFee);
-        return true
+        return await signingClient.execute(userAddress, FAUCET_ADDRESS, entrypoint, txFee);
     } catch (e) {
-        console.log('Error', e);
-        return false
+        return Promise.reject(e)
     }
 }
