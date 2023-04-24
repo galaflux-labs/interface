@@ -32,19 +32,11 @@ const SendStreamForm: FC<KeplerWalletState> = (props) => {
 
   const [startDate, endDate] = methods.watch(["startDate", "endDate"])
 
+  // const submissionStatus = useState<"ok" | "failed">("")
+
   const [showAlert, setShowAlert] = useState(false)
   const [isAlertError, setIsAlertError] = useState(true)
   const [alertMsg, setAlertMsg] = useState("Error")
-
-  function alert(msg: string, isErr: boolean) {
-    console.log(msg)
-    setIsAlertError(isErr)
-    setAlertMsg(msg)
-    setShowAlert(true)
-    setTimeout(function () {
-      setShowAlert(false)
-    }, 5000);
-  }
 
   const startDateTimestamp = new Date(startDate).getTime()
   const endDateTimestamp = new Date(endDate).getTime()
@@ -54,7 +46,7 @@ const SendStreamForm: FC<KeplerWalletState> = (props) => {
     const endDateTimestamp = Math.floor(new Date(fields.endDate).getTime() / 1000)
     const amount = new bigDecimal(fields.amount).multiply(new bigDecimal(new BN(10).pow(new BN(18)).toString())).floor().getValue()
 
-    return createStream({
+    const promise = createStream({
       gasPrice: props.gasPrice,
       ownerAddress: props.walletAddress,
       signingClient: props.signingClient,
@@ -64,6 +56,10 @@ const SendStreamForm: FC<KeplerWalletState> = (props) => {
       endDate: endDateTimestamp,
       streamImmediately: fields.streamImmediately
     })
+
+    promise.then(() => setShowAlert(true))
+
+
   }), [props, handleSubmit])
 
   return (

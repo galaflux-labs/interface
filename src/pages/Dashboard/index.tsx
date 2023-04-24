@@ -52,7 +52,7 @@ const Dashboard: FC = () => {
     <>
       {state
         ? <StreamsFetcher walletAddress={state.walletAddress} />
-        : <ConnectWallet />
+        : <div className="flex h-full items-center justify-center"><ConnectWallet /></div>
       }
     </>
   )

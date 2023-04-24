@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useCallback, useEffect, useState } from 'react';
 import StreamingHeader from "./Header";
 import Participants from "./Participants";
 import Footer from "./Footer";
@@ -11,7 +11,7 @@ import { BaseButton } from "../../components/Buttons";
 import { withdraw } from "../../api/set";
 import { IStream } from "../../types/stream";
 import CustomAlert from "../../components/Animation/Alert";
-import {BN} from "bn.js";
+import { KeplerWalletState } from "../../wallet/wallet";
 
 const Stream: FC<IStream> = (props) => {
 
@@ -23,42 +23,42 @@ const Stream: FC<IStream> = (props) => {
   const [isAlertError, setIsAlertError] = useState(true)
   const [alertMsg, setAlertMsg] = useState("Error")
 
-  function alert(msg: string, isErr: boolean) {
-    console.log(msg)
+  const alert = useCallback((msg: string, isErr: boolean) => {
     setIsAlertError(isErr)
     setAlertMsg(msg)
     setShowAlert(true)
     setTimeout(function () {
       setShowAlert(false)
-    }, 5000);
-  }
+    }, 3000)
+  }, [setIsAlertError, setAlertMsg, setShowAlert])
 
-  function claim(){
+  const claim = useCallback(async (state: KeplerWalletState) => {
     withdraw({
-      walletAddress: state?.walletAddress,
-      streamId: props.streamId,
-      signingClient: state?.signingClient,
-      gasPrice: state?.gasPrice
-    }).then(r => {
-      alert("Done", false)
-      getStream(props.streamId).then(newStr => {
-        setClaimedAmount(newStr.claimed_amount)
-      })
-    }).catch((e) => {
+        walletAddress: state.walletAddress,
+        streamId: props.streamId,
+        signingClient: state.signingClient,
+        gasPrice: state.gasPrice
+      }
+    ).then(() => {
+        alert("Claimed successfully", false)
+        getStream(props.streamId).then(newStr => {
+          setClaimedAmount(newStr.claimed_amount)
+        })
+      }
+    ).catch((e) => {
       console.log(e)
-      alert("Error", true)
+      alert("Claiming failed", true)
     })
-  }
-
+  }, [alert, props])
 
   return (
     <div className="flex items-center justify-center h-full">
       {showAlert ? (
-          <div className="absolute top-10 right-10">
-            <CustomAlert msg={alertMsg} isError={isAlertError}/>
-          </div>
+        <div className="absolute top-10 right-10">
+          <CustomAlert msg={alertMsg} isError={isAlertError} />
+        </div>
       ) : (
-          <></>
+        <></>
       )}
       <Flow />
       <div className="min-w-[600px] space-y-12">
@@ -82,7 +82,7 @@ const Stream: FC<IStream> = (props) => {
         {state && state.walletAddress === props.recipient &&
           <div>
             <BaseButton text="Claim tokens"
-                        onClick={claim}
+                        onClick={() => claim(state)}
             />
           </div>
         }
