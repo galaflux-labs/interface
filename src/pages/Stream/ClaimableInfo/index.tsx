@@ -7,7 +7,7 @@ interface ClaimableInfoProps {
   endDateTimestamp: number
   amount: number
   tokenName: string
-  claimed: number
+  claimed: string
   flowRate: number
 }
 
@@ -16,11 +16,7 @@ const ClaimableInfo: FC<ClaimableInfoProps> = (props) => {
   const divisor = new bigDecimal(new BN(10).pow(new BN(18)).toString())
   const precision = 6
 
-  const [claimable, setClaimable] = useState(
-    new BN(new Date().getTime() / 1000 - props.startDateTimestamp)
-    .mul(new BN(props.flowRate))
-    .sub(new BN(props.claimed))
-  )
+  const [claimable, setClaimable] = useState(new BN(0))
 
   useEffect(() => {
     if (props.startDateTimestamp * 1000 > new Date().getTime()) {
@@ -30,6 +26,14 @@ const ClaimableInfo: FC<ClaimableInfoProps> = (props) => {
       setClaimable(value => value.add(new BN(props.flowRate)))
     }, 1000)
   })
+
+  useEffect(() => {
+    setClaimable(
+        new BN(new Date().getTime() / 1000 - props.startDateTimestamp)
+            .mul(new BN(props.flowRate))
+            .sub(new BN(props.claimed))
+    );
+  }, [props.claimed])
 
   return (
     <div className="flex flex-row justify-between">

@@ -15,9 +15,9 @@ interface CreateStreamParams {
 }
 
 interface WithdrawParams {
-    walletAddress: string
-    signingClient: SigningCosmWasmClient
-    gasPrice: GasPrice
+    walletAddress: string | undefined
+    signingClient: SigningCosmWasmClient | undefined
+    gasPrice: GasPrice  | undefined
     streamId: number
 }
 
@@ -48,6 +48,9 @@ export async function createStream(params: CreateStreamParams) {
 }
 
 export async function withdraw(params: WithdrawParams) {
+    if (params.walletAddress === undefined || params.gasPrice === undefined || params.signingClient === undefined){
+        return Promise.reject()
+    }
     try {
         let entrypoint = {
             withdraw: {
@@ -58,6 +61,7 @@ export async function withdraw(params: WithdrawParams) {
 
         return await params.signingClient.execute(params.walletAddress, CONTRACT_ADDRESS, entrypoint, txFee);
     } catch (e) {
+        console.log(e)
         return Promise.reject()
     }
 }

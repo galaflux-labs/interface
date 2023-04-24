@@ -10,13 +10,56 @@ import { useKeplrWallet } from "../../wallet";
 import { BaseButton } from "../../components/Buttons";
 import { withdraw } from "../../api/set";
 import { IStream } from "../../types/stream";
+import CustomAlert from "../../components/Animation/Alert";
+import {BN} from "bn.js";
 
 const Stream: FC<IStream> = (props) => {
 
   const {state} = useKeplrWallet()
 
+  const [claimedAmount, setClaimedAmount] = useState(props.claimed_amount.toString())
+
+  const [showAlert, setShowAlert] = useState(false)
+  const [isAlertError, setIsAlertError] = useState(true)
+  const [alertMsg, setAlertMsg] = useState("Error")
+
+  function alert(msg: string, isErr: boolean) {
+    console.log(msg)
+    setIsAlertError(isErr)
+    setAlertMsg(msg)
+    setShowAlert(true)
+    setTimeout(function () {
+      setShowAlert(false)
+    }, 5000);
+  }
+
+  function claim(){
+    withdraw({
+      walletAddress: state?.walletAddress,
+      streamId: props.streamId,
+      signingClient: state?.signingClient,
+      gasPrice: state?.gasPrice
+    }).then(r => {
+      alert("Done", false)
+      getStream(props.streamId).then(newStr => {
+        setClaimedAmount(newStr.claimed_amount)
+      })
+    }).catch((e) => {
+      console.log(e)
+      alert("Error", true)
+    })
+  }
+
+
   return (
     <div className="flex items-center justify-center h-full">
+      {showAlert ? (
+          <div className="absolute top-10 right-10">
+            <CustomAlert msg={alertMsg} isError={isAlertError}/>
+          </div>
+      ) : (
+          <></>
+      )}
       <Flow />
       <div className="min-w-[600px] space-y-12">
         <StreamingHeader amount={props.amount}
@@ -24,7 +67,7 @@ const Stream: FC<IStream> = (props) => {
         />
         <ClaimableInfo amount={props.amount}
                        tokenName={"$TEST"}
-                       claimed={props.claimed_amount}
+                       claimed={claimedAmount}
                        flowRate={props.rate_per_second}
                        endDateTimestamp={props.end_time}
                        startDateTimestamp={props.start_time}
@@ -39,13 +82,7 @@ const Stream: FC<IStream> = (props) => {
         {state && state.walletAddress === props.recipient &&
           <div>
             <BaseButton text="Claim tokens"
-                        onClick={() =>
-                          withdraw({
-                            walletAddress: state.walletAddress,
-                            streamId: props.streamId,
-                            signingClient: state.signingClient,
-                            gasPrice: state.gasPrice
-                          })}
+                        onClick={claim}
             />
           </div>
         }
