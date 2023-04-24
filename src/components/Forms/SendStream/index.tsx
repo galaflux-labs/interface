@@ -1,4 +1,4 @@
-import {FC, useCallback, useState} from 'react';
+import { FC, useCallback, useState } from 'react';
 import { FormProvider, useForm } from "react-hook-form";
 import { SendStreamSubmitProps } from "./types";
 import ReceiverInput from "./ReceiverInput";
@@ -28,15 +28,22 @@ const SendStreamForm: FC<KeplerWalletState> = (props) => {
     }
   })
 
-  const {handleSubmit} = methods
+  const {handleSubmit, reset} = methods
 
   const [startDate, endDate] = methods.watch(["startDate", "endDate"])
-
-  // const submissionStatus = useState<"ok" | "failed">("")
 
   const [showAlert, setShowAlert] = useState(false)
   const [isAlertError, setIsAlertError] = useState(true)
   const [alertMsg, setAlertMsg] = useState("Error")
+
+  const alert = useCallback((msg: string, isErr: boolean) => {
+    setIsAlertError(isErr)
+    setAlertMsg(msg)
+    setShowAlert(true)
+    setTimeout(function () {
+      setShowAlert(false)
+    }, 3000)
+  }, [setIsAlertError, setAlertMsg, setShowAlert])
 
   const startDateTimestamp = new Date(startDate).getTime()
   const endDateTimestamp = new Date(endDate).getTime()
@@ -57,19 +64,27 @@ const SendStreamForm: FC<KeplerWalletState> = (props) => {
       streamImmediately: fields.streamImmediately
     })
 
-    promise.then(() => setShowAlert(true))
+    promise
+    .then(tx => {
+      alert("Stream created successfully", false)
+      methods.reset({
+        receiver: "",
+        amount: "",
+        startDate: "",
+        endDate: "",
+        streamImmediately: false
+      })
+    })
+    .catch(() => alert("Error while creating a stream", true))
 
-
-  }), [props, handleSubmit])
+  }), [props, alert, methods])
 
   return (
     <FormProvider {...methods}>
-      {showAlert ? (
-          <div className="absolute top-10 right-10">
-            <CustomAlert msg={alertMsg} isError={isAlertError}/>
-          </div>
-      ) : (
-          <></>
+      {showAlert && (
+        <div className="absolute top-10 right-10">
+          <CustomAlert msg={alertMsg} isError={isAlertError} />
+        </div>
       )}
       <div className="w-[600px] p-8 rounded-2xl ring-1 ring-gray-300 bg-white">
         <div className="flex flex-col justify-center gap-4 w-full mb-8">
@@ -78,7 +93,7 @@ const SendStreamForm: FC<KeplerWalletState> = (props) => {
             <ArchwayNameIcon height={30} width={100} />
           </span>
           <ReceiverInput placeholder="satoshi.archway" />
-          <TokenInput/>
+          <TokenInput />
           <AmountInput placeholder="0.0" />
           <div className="flex flex-row gap-4 w-full justify-between">
             <StartDateInput placeholder={new Date().toLocaleDateString()} />
